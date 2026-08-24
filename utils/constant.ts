@@ -1,0 +1,1 @@
+export const pcUrl = 'https://www.youngmock.top'
