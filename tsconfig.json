@@ -1,4 +1,9 @@
 {
   // https://nuxt.com/docs/guide/concepts/typescript
-  "extends": "./.nuxt/tsconfig.json"
+  "extends": "./.nuxt/tsconfig.json",
+  // 本项目大量以数组索引读取静态配置（screenOptions['iphoneType'][0] 等），
+  // 关闭索引越界检查以避免海量误报；空引用错误仍由 strict 捕获
+  "compilerOptions": {
+    "noUncheckedIndexedAccess": false
+  }
 }

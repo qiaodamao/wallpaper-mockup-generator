@@ -1,5 +1,5 @@
 {
-  "name": "nuxt-app",
+  "name": "wallpaper-mockup-generator",
   "private": true,
   "type": "module",
   "scripts": {
@@ -7,31 +7,36 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "typecheck": "nuxi typecheck",
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.3.2",
-    "@nuxtjs/i18n": "^9.5.6",
-    "@nuxtjs/sitemap": "^8.0.13",
-    "@popperjs/core": "npm:@sxzz/popperjs-es@^2.11.8",
+    "@nuxtjs/i18n": "^10.6.0",
+    "@nuxtjs/sitemap": "^8.5.0",
     "@vercel/analytics": "^1.6.1",
     "daisyui": "^5.5.19",
-    "element-plus": "^2.13.7",
+    "element-plus": "^2.14.5",
     "html-to-image": "^1.11.13",
-    "nuxt": "^3.21.2",
+    "nuxt": "^4.5.2",
     "nuxt-headlessui": "^1.2.2",
     "nuxt-site-config": "^4.0.8",
-    "stackblur-canvas": "^2.7.0",
-    "vue3-clipboard": "^1.0.0"
+    "stackblur-canvas": "^2.7.0"
   },
   "packageManager": "pnpm@10.11.0+sha512.6540583f41cc5f628eb3d9773ecee802f4f9ef9923cc45b69890fb47991d4b092964694ec3a4f738a420c918a333062c8b925d312f42e4f0c263eb603551f977",
   "devDependencies": {
-    "@nuxt/icon": "^1.15.0",
+    "@nuxt/eslint": "^1.17.0",
+    "@nuxt/icon": "^2.5.1",
     "@nuxtjs/tailwindcss": "^6.14.0",
+    "@types/node": "^26.3.0",
     "autoprefixer": "^10.5.0",
-    "nuxt-icon": "1.0.0-beta.7",
+    "eslint": "^10.9.1",
     "sass-embedded": "^1.99.0",
+    "typescript": "^5.9.3",
     "unplugin-auto-import": "^19.3.0",
-    "unplugin-vue-components": "^28.8.0"
+    "unplugin-vue-components": "^28.8.0",
+    "vue-tsc": "^3.3.11"
   }
 }

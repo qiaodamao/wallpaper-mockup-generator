@@ -1,1 +1,1 @@
-export const pcUrl = 'https://www.youngmock.top'
+export const pcUrl = 'https://kusheji.com'

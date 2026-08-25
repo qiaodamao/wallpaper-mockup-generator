@@ -11,6 +11,7 @@ node_modules
 
 # Local package store (pnpm)
 .pnpm-store
+.pnpm-cache
 
 # WorkBuddy agent workspace
 .workbuddy
@@ -23,6 +24,10 @@ logs
 .DS_Store
 .fleet
 .idea
+Thumbs.db
+Desktop.ini
 
 # Local env files
+.env
+.env.*
 !.env.example

@@ -1,6 +1,13 @@
 /* Import Element Plus styles */
 @import 'element-plus/theme-chalk/index.css';
 
+@layer base {
+  html,
+  body {
+    font-family: 'Microsoft YaHei', '微软雅黑', 'PingFang SC', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  }
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

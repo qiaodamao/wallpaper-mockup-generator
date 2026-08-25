@@ -62,7 +62,14 @@
     "batchExportTitle": "Batch Export - Multiple Images Using the Same Template",
     "clearImages": "Reset image",
     "preview": "Preview",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "copySuccess": "Copied successfully",
+    "copyFail": "Copy failed"
+  },
+  "error": {
+    "title": "Something went wrong",
+    "message": "Sorry, the page does not exist or an error occurred.",
+    "backHome": "Back to home"
   },
   "head": {
     "title": "Wallpaper Mockup Generator - Templates for Mobile, Tablet, and Computer",
@@ -83,11 +90,12 @@
       "create": "Create",
       "plans": "Plans",
       "login": "Log in",
-      "signup": "Sign up"
+      "signup": "Sign up",
+      "mainSite": "Main Site"
     },
     "hero": {
-      "title": "Explore. Remix. Create.",
-      "subtitle": "Mockup Studio makes finding beautiful device mockup templates effortless — so you can craft stunning wallpaper previews.",
+      "title": "Wallpaper Mockup Generator",
+      "subtitle": "No complex steps — upload your wallpaper and instantly create mockup previews for phone, tablet, and computer.",
       "cta": "Get started"
     },
     "cards": {

@@ -62,7 +62,14 @@
     "batchExportTitle": "批量导出 - 多张图片使用同一个模板",
     "clearImages": "清空图片",
     "preview": "预览",
-    "cancel": "取消"
+    "cancel": "取消",
+    "copySuccess": "复制成功",
+    "copyFail": "复制失败"
+  },
+  "error": {
+    "title": "页面出错了",
+    "message": "抱歉，页面不存在或发生了错误。",
+    "backHome": "返回首页"
   },
   "head": {
     "title": "壁纸样机生成器 - 手机、平板、电脑样机模板工具",
@@ -83,11 +90,12 @@
       "create": "Create",
       "plans": "计划/方案",
       "login": "登录",
-      "signup": "注册账号"
+      "signup": "注册账号",
+      "mainSite": "主站"
     },
     "hero": {
-      "title": "探索。重新组合。创造。",
-      "subtitle": "Mockup Studio 让寻找精美的设备样机模板变得非常容易，并创造出令人惊艳的壁纸预览。",
+      "title": "壁纸样机生成工具",
+      "subtitle": "无需复杂操作，一键上传壁纸，轻松创建适用于手机、平板、电脑的样机效果图。",
       "cta": "开始使用吧"
     },
     "cards": {

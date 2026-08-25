@@ -8,10 +8,17 @@ export default defineNuxtConfig({
     '@nuxtjs/i18n',
     '@nuxtjs/tailwindcss',
     '@nuxt/icon',
-    '@nuxtjs/sitemap'
+    '@nuxtjs/sitemap',
+    '@nuxt/eslint'
   ],
+  typescript: {
+    typeCheck: false // typecheck 由 pnpm typecheck 单独执行，避免拖慢 dev
+  },
+  // 新版 @nuxtjs/sitemap 从 site-config 读取站点地址（siteUrl 选项已移除）
+  site: {
+    url: 'https://kusheji.com/',
+  },
   sitemap: {
-    siteUrl: 'youngmock.top/',
     autoLastmod: true,
   },
   runtimeConfig: {
@@ -34,7 +41,6 @@ export default defineNuxtConfig({
     ],
     defaultLocale: 'zh',
     detectBrowserLanguage: false, // ✅ 正确：禁用浏览器语言检测,否则默认是浏览器的语言
-    lazy: true, // 懒加载语言包
     langDir: 'locales/', // 存放语言文件的目录
     strategy: 'prefix_except_default', // URL 前缀（/en, /zh），prefix_except_default：非默认语言会有语言前缀，默认语言不会有前缀
   },

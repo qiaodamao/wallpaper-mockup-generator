@@ -2,7 +2,7 @@
 const emit = defineEmits<{
   (e: 'close', event: MouseEvent): void
 }>()
-const props = defineProps({
+defineProps({
   closeButton: {
     type: Boolean,
     default: true,
