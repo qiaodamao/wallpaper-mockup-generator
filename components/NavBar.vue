@@ -17,12 +17,12 @@ const navLinks = computed(() => [
 
 <template>
   <header
-    class="h-[64px] max-h-[64px] flex fixed backdrop-filter backdrop-blur-md top-0 z-40 w-full flex-none transition-colors duration-300 lg:z-50 bg-white/[0.85] dark:bg-gray-950/[0.6]">
+    class="flex fixed top-0 z-40 w-full flex-none transition-colors duration-300 lg:z-50">
     <!-- content -->
-    <div class="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8">
+    <div class="flex-1 flex items-start justify-center pt-8 px-5 sm:px-6 lg:px-8">
       <!-- nav links: 胶囊导航（含 logo 与右侧操作区），整体居中 -->
-      <nav class="flex items-center gap-1 px-3 h-12 rounded-full bg-gray-100/80 dark:bg-gray-800/60 min-w-0">
-        <NuxtLink to="/" class="flex items-center font-bold text-lg text-primary-500 shrink-0 pr-2 mr-[100px]">
+      <nav class="flex items-center gap-1 px-4 h-16 w-full lg:w-auto rounded-full bg-white/40 dark:bg-gray-800/40 backdrop-blur-xl backdrop-saturate-150 shadow-[0_0_16px_rgba(0,0,0,0.08)] border border-white/40 dark:border-white/10 min-w-0">
+        <NuxtLink to="/" class="flex items-center font-bold text-lg text-primary-500 shrink-0 pr-2 mr-auto lg:mr-[100px]">
           <img src="/logo/android-chrome-192x192.png" alt="Logo" class="w-8 h-8 mr-2 rounded-full object-cover inline-block align-middle" >
           <span class="capitalize text-[#008C8C] text-base">{{ awesome.name }}</span>
         </NuxtLink>
@@ -37,7 +37,7 @@ const navLinks = computed(() => [
           </NuxtLink>
 
           <!-- right: actions -->
-          <div class="flex items-center gap-2 sm:gap-3 shrink-0 ml-[100px]">
+          <div class="flex items-center gap-2 sm:gap-3 shrink-0 ml-auto lg:ml-[100px]">
             <a
               href="https://kusheji.com"
               target="_blank"
@@ -72,7 +72,7 @@ const navLinks = computed(() => [
     >
       <div
         v-if="showDrawer"
-        class="lg:hidden absolute top-[64px] left-0 right-0 bg-white dark:bg-gray-950 border-b border-gray-950/10 dark:border-gray-50/[0.2] shadow-lg max-h-[calc(100vh-64px)] overflow-y-auto"
+        class="lg:hidden absolute top-[112px] left-5 right-5 rounded-2xl bg-white/70 dark:bg-gray-900/70 backdrop-blur-xl shadow-[0_0_16px_rgba(0,0,0,0.08)] border border-white/40 dark:border-white/10 max-h-[calc(100vh-128px)] overflow-y-auto"
       >
         <nav class="flex flex-col px-4 py-3">
           <NuxtLink

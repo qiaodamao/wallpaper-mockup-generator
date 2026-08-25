@@ -12,10 +12,6 @@ import { ClientOnly, MockupItem } from '#components';
 
 const { awesome } = useAppConfig()
 
-const config = useRuntimeConfig()
-
-const isChinaRegion = config.public.region == 'china'
-
 const { t } = useI18n()
 
 
@@ -331,11 +327,9 @@ onMounted(() => {
         <!-- title -->
         <div>
           <slot name="title">
-            <NuxtLink to="/" class="font-bold text-lg text-primary-500 flex items-center">
-              <svg width="24" height="24" viewBox="0 0 1200 1200" fill="none" xmlns="http://www.w3.org/2000/svg" class="mr-2">
-                <path d="M600 0C931.371 0 1200 268.629 1200 600C1200 931.371 931.371 1200 600 1200C268.629 1200 0 931.371 0 600C0 268.629 268.629 0 600 0ZM311 918.33H473.11L596.83 600.17L473.11 282H311V918.33ZM727.22 918.33H889.22V727.36L603.44 600.17L727.22 918.33ZM603.44 600.17L889.67 470.94V282H727.33L603.44 600.17Z" fill="black"/>
-              </svg>
-              <span class="capitalize text-black">{{ awesome.name }}</span>
+            <NuxtLink to="/" class="text-lg text-primary-500 flex items-center">
+              <img src="/logo/android-chrome-192x192.png" alt="Logo" class="w-8 h-8 mr-2 rounded-full object-cover inline-block align-middle">
+              <span class="capitalize text-black hidden sm:inline">{{ awesome.name }}</span>
             </NuxtLink>
           </slot>
         </div>
@@ -632,9 +626,6 @@ v-model="backgroundColor" :predefine="['rgb(255, 255, 255)', 'rgb(76, 76, 76)', 
         </div>
       </div>
 
-      <div v-if="!isMiniProgram && !isVerticalScreen && isChinaRegion" class="tools">
-        <a class="icp-number" href="https://beian.miit.gov.cn" target="_blank">蜀ICP备2023035883号-5</a>
-      </div>
     </div>
 
     <el-dialog v-model="dialogVisible" title="长按保存图片" align-center :modal="true" :width="exportPopupWidth">
@@ -1070,28 +1061,6 @@ video {
 
 
 
-  }
-
-  .tools {
-    height: 60px;
-    box-sizing: border-box;
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background-color: rgba(255, 255, 255, 0.95);
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 10px 18px;
-    z-index: 100;
-
-    .icp-number {
-      font-size: 12px;
-      color: #888;
-      white-space: nowrap;
-    }
   }
 
   /* 顶栏导出按钮（与 logo 同行）—— 规则见 .root 块之外，确保匹配 header 内的按钮 */

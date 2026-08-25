@@ -41,7 +41,6 @@ export function useImageExport(deps: {
 
   // 导出放大倍数
   const exportSettingOptions = [
-    { label: '0.1X', value: 0.1 },
     { label: '1X', value: 1 },
     { label: '2X', value: 2 },
   ]

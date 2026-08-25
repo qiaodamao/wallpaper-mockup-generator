@@ -44,7 +44,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="flex flex-1 w-full min-w-0 bg-white dark:bg-gray-950">
+  <div class="home-page flex flex-1 w-full min-w-0 dark:bg-gray-950">
     <div class="page-wrap flex-1 flex flex-col items-center justify-center">
       <!-- HERO -->
       <section class="hero w-full max-w-5xl flex flex-col items-center text-center px-1">
@@ -122,10 +122,41 @@ onBeforeUnmount(() => {
 </template>
 
 <style scoped>
-/* ===== 移动优先：基础值即移动端，媒体查询覆盖桌面端 ===== */
+/* ===== 首屏背景：复刻豆包工作台（浅蓝渐变底 + 顶部模糊蓝色光晕） ===== */
+.home-page {
+  /* 抵消全局 Content 的 pt-[64px]，让背景从页面最顶部开始 */
+  margin-top: -64px;
+  padding-top: 64px;
+  background:
+    linear-gradient(rgb(223, 241, 255) 0.01%, rgb(255, 255, 255) 61.54%);
+  position: relative;
+  overflow: hidden;
+}
+/* 顶部模糊蓝色光晕（对应豆包的 feGaussianBlur 蓝色椭圆） */
+.home-page::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 2000px;
+  height: 700px;
+  transform: translate(-50%, -55%);
+  background: radial-gradient(closest-side, #006AFF 0%, #0a5bd6 45%, rgba(0, 74, 160, 0) 100%);
+  filter: blur(120px);
+  opacity: 0.28;
+  pointer-events: none;
+}
+:root.dark .home-page {
+  background:
+    linear-gradient(rgb(10, 18, 32) 0.01%, rgb(3, 7, 18) 61.54%);
+}
+:root.dark .home-page::before {
+  opacity: 0.16;
+}
 .page-wrap {
+  position: relative;
   min-width: 0;
-  padding: 1.5rem 1rem 3rem; /* pt-6 px-4 pb-12 */
+  padding: 8.5rem 1rem 3rem; /* 顶部加大留白 */
 }
 
 /* HERO */
@@ -174,7 +205,7 @@ onBeforeUnmount(() => {
 
 /* ===== 平板/桌面端覆盖 ===== */
 @media (min-width: 640px) {
-  .page-wrap { padding: 2.5rem 2rem 4rem; } /* pt-10 px-8 pb-16 */
+  .page-wrap { padding: 10rem 2rem 4rem; } /* 顶部加大留白 */
   .hero { margin-top: 0; }
   .hero-title { font-size: 48px; /* text-5xl */ }
   .hero-sub { font-size: 16px; max-width: 42rem; }
