@@ -65,6 +65,14 @@ export default <Partial<Config>>{
     './node_modules/daisyui/dist/**/*.js',
   ],
   theme: {
+    // 显式声明断点，确保 sm/md/lg/xl/2xl 响应式变体正确生成
+    screens: {
+      sm: '640px',
+      md: '768px',
+      lg: '1024px',
+      xl: '1280px',
+      '2xl': '1536px',
+    },
     extend: {
       maxWidth: {
         '8xl': '90rem',
