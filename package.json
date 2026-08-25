@@ -16,6 +16,7 @@
     "@element-plus/icons-vue": "^2.3.2",
     "@nuxtjs/i18n": "^10.6.0",
     "@nuxtjs/sitemap": "^8.5.0",
+    "@popperjs/core": "^2.11.8",
     "@vercel/analytics": "^1.6.1",
     "daisyui": "^5.5.19",
     "element-plus": "^2.14.5",

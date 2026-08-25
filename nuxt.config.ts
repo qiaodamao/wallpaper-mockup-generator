@@ -54,11 +54,13 @@ export default defineNuxtConfig({
       }),
     ]
   },
-  // nitro: {
-  //   externals: {
-  //     inline: ['@popperjs/core']
-  //   }
-  // },
+  // EdgeOne 等运行时按 pnpm 严格模式安装依赖，@popperjs/core（element-plus 的传递依赖）
+  // 不在顶层 node_modules，必须内联进 server 产物，否则 SSR 报 ERR_MODULE_NOT_FOUND
+  nitro: {
+    externals: {
+      inline: ['@popperjs/core']
+    }
+  },
   compatibilityDate: '2025-05-15',
   devtools: { enabled: false },
   css: ['@/assets/css/tailwind.css', '@/assets/css/_variables.scss', '@/assets/css/font.css'],
