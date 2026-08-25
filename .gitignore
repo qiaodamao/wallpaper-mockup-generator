@@ -9,6 +9,12 @@ dist
 # Node dependencies
 node_modules
 
+# Local package store (pnpm)
+.pnpm-store
+
+# WorkBuddy agent workspace
+.workbuddy
+
 # Logs
 logs
 *.log
