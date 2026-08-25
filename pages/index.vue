@@ -105,6 +105,21 @@ const cards = [
 const scrollerRef = ref<HTMLElement | null>(null)
 const canScrollLeft = ref(false)
 const canScrollRight = ref(true)
+const isMobile = ref(false)
+
+// 移动端等比缩小卡片高度与错落幅度
+const displayCards = computed(() =>
+  cards.map((c) => ({
+    ...c,
+    h: isMobile.value ? Math.round(c.h * 0.78) : c.h,
+    y: isMobile.value ? Math.round(c.y * 0.78) : c.y,
+  })),
+)
+
+function onScreenResize() {
+  isMobile.value = typeof window !== 'undefined' && window.innerWidth < 640
+  updateScrollState()
+}
 
 function updateScrollState() {
   const el = scrollerRef.value
@@ -120,14 +135,14 @@ function scrollBy(direction: -1 | 1) {
 }
 
 onMounted(() => {
-  updateScrollState()
+  onScreenResize()
   scrollerRef.value?.addEventListener('scroll', updateScrollState, { passive: true })
-  window.addEventListener('resize', updateScrollState)
+  window.addEventListener('resize', onScreenResize)
 })
 
 onBeforeUnmount(() => {
   scrollerRef.value?.removeEventListener('scroll', updateScrollState)
-  window.removeEventListener('resize', updateScrollState)
+  window.removeEventListener('resize', onScreenResize)
 })
 </script>
 
@@ -174,12 +189,12 @@ onBeforeUnmount(() => {
 
         <div
           ref="scrollerRef"
-          class="flex items-start gap-4 sm:gap-5 overflow-x-auto scroll-smooth pt-4 pb-6 h-[540px] no-scrollbar snap-x snap-mandatory"
+          class="flex items-start gap-3 sm:gap-5 overflow-x-auto scroll-smooth pt-3 sm:pt-4 pb-5 sm:pb-6 h-[425px] sm:h-[540px] no-scrollbar snap-x snap-mandatory"
         >
           <div
-            v-for="card in cards"
+            v-for="card in displayCards"
             :key="card.key"
-            class="snap-start grow shrink-0 basis-[210px] sm:basis-[230px] rounded-2xl relative overflow-hidden flex flex-col justify-between p-3 sm:p-4 shadow-sm"
+            class="snap-start grow shrink-0 basis-[170px] sm:basis-[230px] rounded-2xl relative overflow-hidden flex flex-col justify-between p-3 sm:p-4 shadow-sm"
             :style="{ background: card.bg, height: `${card.h}px`, transform: `translateY(${card.y}px)` }"
           >
             <!-- top title chip -->
@@ -212,8 +227,8 @@ onBeforeUnmount(() => {
       </section>
 
       <!-- SECTION TITLE -->
-      <section class="w-full max-w-5xl mt-16 sm:mt-24 text-center">
-        <h2 class="text-xl sm:text-2xl md:text-3xl font-semibold text-gray-900 dark:text-white">
+      <section class="w-full max-w-5xl mt-10 sm:mt-16 md:mt-24 text-center px-2">
+        <h2 class="text-lg sm:text-2xl md:text-3xl font-semibold text-gray-900 dark:text-white">
           {{ t('home.sectionTitle') }}
         </h2>
       </section>
