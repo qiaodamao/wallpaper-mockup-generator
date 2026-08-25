@@ -33,9 +33,9 @@ const navLinks = computed(() => [
 
 <template>
   <header
-    class="h-[64px] max-h-[64px] flex fixed backdrop-filter backdrop-blur-md top-0 z-40 w-full flex-none transition-colors duration-300 lg:z-50 border-b border-gray-950/10 dark:border-gray-50/[0.2] bg-white/[0.85] dark:bg-gray-950/[0.6]">
+    class="h-[64px] max-h-[64px] flex fixed backdrop-filter backdrop-blur-md top-0 z-40 w-full flex-none transition-colors duration-300 lg:z-50 bg-white/[0.85] dark:bg-gray-950/[0.6]">
     <!-- content -->
-    <div class="flex-1 flex items-center justify-between max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex-1 flex items-center justify-between px-4 sm:px-6 lg:px-8">
       <!-- left: logo + nav links -->
       <div class="flex items-center gap-8 min-w-0">
         <NuxtLink to="/" class="flex items-center font-bold text-lg text-primary-500 shrink-0">
