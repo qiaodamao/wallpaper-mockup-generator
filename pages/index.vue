@@ -44,7 +44,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="flex flex-1 w-full bg-white dark:bg-gray-950">
+  <div class="flex flex-1 w-full min-w-0 bg-white dark:bg-gray-950">
     <div class="page-wrap flex-1 flex flex-col items-center">
       <!-- HERO -->
       <section class="hero w-full max-w-5xl flex flex-col items-center text-center px-1">
@@ -64,7 +64,7 @@ onBeforeUnmount(() => {
       </section>
 
       <!-- CAROUSEL -->
-      <section class="carousel-wrap relative w-full">
+      <section class="carousel-wrap relative w-full min-w-0">
         <button
           v-show="canScrollLeft"
           class="carousel-arrow carousel-arrow-left absolute top-1/2 -translate-y-1/2 z-20 rounded-full bg-white shadow-lg border border-gray-100 flex items-center justify-center text-gray-700 hover:bg-gray-50 transition"
@@ -131,6 +131,7 @@ onBeforeUnmount(() => {
 <style scoped>
 /* ===== 移动优先：基础值即移动端，媒体查询覆盖桌面端 ===== */
 .page-wrap {
+  min-width: 0;
   padding: 1.5rem 1rem 3rem; /* pt-6 px-4 pb-12 */
 }
 
@@ -155,6 +156,7 @@ onBeforeUnmount(() => {
 /* CAROUSEL */
 .carousel-wrap { margin-top: 2rem; }
 .home-scroller {
+  min-width: 0;
   gap: 0.75rem;
   padding-top: 0.75rem;
   padding-bottom: 1.25rem;
