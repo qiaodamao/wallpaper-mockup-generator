@@ -117,13 +117,6 @@ onBeforeUnmount(() => {
           </div>
         </div>
       </section>
-
-      <!-- SECTION TITLE -->
-      <section class="w-full max-w-5xl text-center px-2 section-title-wrap">
-        <h2 class="section-title font-semibold text-gray-900 dark:text-white">
-          {{ t('home.sectionTitle') }}
-        </h2>
-      </section>
     </div>
   </div>
 </template>
@@ -175,10 +168,6 @@ onBeforeUnmount(() => {
 /* 卡片内底部按钮高度（移动） */
 .home-card :deep(a) { height: 2.25rem; font-size: 11px; }
 
-/* SECTION TITLE */
-.section-title-wrap { margin-top: 2rem; }
-.section-title { font-size: 16px; }
-
 /* 隐藏滚动条 */
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
@@ -197,16 +186,11 @@ onBeforeUnmount(() => {
   .card-chip { font-size: 12px; padding: 0.25rem 0.75rem; }
   .card-visual { font-size: 3.75rem; /* text-6xl */ }
   .home-card :deep(a) { height: 2.75rem; font-size: 14px; }
-
-  .section-title-wrap { margin-top: 4rem; }
-  .section-title { font-size: 24px; }
 }
 
 @media (min-width: 768px) {
   .hero-title { font-size: 56px; }
   .carousel-arrow { display: flex; width: 2.5rem; height: 2.5rem; }
-  .section-title { font-size: 30px; }
-  .section-title-wrap { margin-top: 6rem; }
 }
 
 /* 卡片移动端等比缩小（首屏即生效，与上面 640 桌面覆盖互补） */
