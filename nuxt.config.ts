@@ -54,11 +54,13 @@ export default defineNuxtConfig({
       }),
     ]
   },
-  // EdgeOne 等运行时按 pnpm 严格模式安装依赖，@popperjs/core（element-plus 的传递依赖）
-  // 不在顶层 node_modules，必须内联进 server 产物，否则 SSR 报 ERR_MODULE_NOT_FOUND
+  // element-plus 的 @popperjs/core 是 npm 别名依赖（实际指向 @sxzz/popperjs-es）。
+  // Nitro 生成的运行时 package.json 无法表达该别名，EdgeOne 重装依赖后
+  // element-plus 运行时 import '@popperjs/core' 会报 ERR_MODULE_NOT_FOUND。
+  // 因此必须把 element-plus 整体内联进 server 产物。
   nitro: {
     externals: {
-      inline: ['@popperjs/core']
+      inline: ['element-plus', '@element-plus/icons-vue', '@popperjs/core']
     }
   },
   compatibilityDate: '2025-05-15',
