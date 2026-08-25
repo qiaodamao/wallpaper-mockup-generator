@@ -45,7 +45,7 @@ onBeforeUnmount(() => {
 
 <template>
   <div class="flex flex-1 w-full min-w-0 bg-white dark:bg-gray-950">
-    <div class="page-wrap flex-1 flex flex-col items-center">
+    <div class="page-wrap flex-1 flex flex-col items-center justify-center">
       <!-- HERO -->
       <section class="hero w-full max-w-5xl flex flex-col items-center text-center px-1">
         <h1 class="hero-title font-extrabold tracking-tight text-gray-900 dark:text-white">
@@ -129,7 +129,7 @@ onBeforeUnmount(() => {
 }
 
 /* HERO */
-.hero { margin-top: 2.5rem; }
+.hero { margin-top: 0; }
 .hero-title {
   font-size: 28px;
   line-height: 1.15;
@@ -175,7 +175,7 @@ onBeforeUnmount(() => {
 /* ===== 平板/桌面端覆盖 ===== */
 @media (min-width: 640px) {
   .page-wrap { padding: 2.5rem 2rem 4rem; } /* pt-10 px-8 pb-16 */
-  .hero { margin-top: 4rem; }
+  .hero { margin-top: 0; }
   .hero-title { font-size: 48px; /* text-5xl */ }
   .hero-sub { font-size: 16px; max-width: 42rem; }
   .hero-cta { margin-top: 2rem; height: 3rem; padding: 0 1.75rem; font-size: 16px; }
