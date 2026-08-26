@@ -1,5 +1,10 @@
 // variables
 :root {
-  // layouts > page > content
-  --layout-page-content-min-height: calc(100vh - 42px);
+  // layouts > page > content（Footer 高度：桌面 42px，移动端 52px）
+  --layout-footer-height: 42px;
+  --layout-page-content-min-height: calc(100vh - var(--layout-footer-height));
+
+  @media (max-width: 767px) {
+    --layout-footer-height: 52px;
+  }
 }
