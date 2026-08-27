@@ -207,7 +207,8 @@ class="date" style="font-size: 22px;white-space: nowrap;"
 
             <div
 v-if="['macType'].includes(proto.type)" class="date-time"
-              style="width:100%;top:463px;;position: absolute;left:0px;display: flex;flex-direction: column;align-items: center; transform: translate(0, 0) rotate(0) skew(0) skewY(0) scaleX(4.3) scaleY(4.3);">
+              style="width:100%;position: absolute;left:0px;display: flex;flex-direction: column;align-items: center;"
+              :style="{ top: `${(proto.dateTimeTop ?? 463) * (proto.dateTimeScale ?? 1)}px`, transform: `scale(${4.3 * (proto.dateTimeScale ?? 1)})` }">
               <div
 class="date" style="font-size: 22px;white-space: nowrap;"
                 :style="{ color: proto.dateTimeColor }">

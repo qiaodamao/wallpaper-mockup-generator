@@ -1,5 +1,5 @@
 import type { MockupExample } from '~/utils/types'
-import { default1Image, noFrameDefault1Image, default2Image, noFrameDefault2Image, magazineImage, magazineBackgroundImage, standImage, standBackgroundImage, againstWallImage, againstWallBackgroundImage, marbleImage, marbleBackgroundImage, iphoneHand1Image, hand1BackgroundImage, desktopIphoneBackgroundImage, iphoneDesktopImage, screenOptions, backgroundOptions, defaultSystemColor, defaultDateTimeColor } from './assets'
+import { default1Image, noFrameDefault1Image, default2Image, noFrameDefault2Image, magazineImage, magazineBackgroundImage, standImage, standBackgroundImage, againstWallImage, againstWallBackgroundImage, marbleImage, marbleBackgroundImage, iphoneHand1Image, hand1BackgroundImage, desktopIphoneBackgroundImage, iphoneDesktopImage, iphoneBlackHandImage, iphoneBlackHandBackgroundImage, screenOptions, backgroundOptions, defaultSystemColor, defaultDateTimeColor } from './assets'
 
 type TFunc = (key: string) => string
 type StyleFn = (zIndex?: number) => Record<string, string | number>
@@ -402,6 +402,49 @@ export function createIphoneExamples(t: TFunc, backgroundDisplayStyle: StyleFn):
           type: backgroundOptions[0],
           autoUpdate: false,
           defaultBackgroundUrl: hand1BackgroundImage,
+          needBlur: false,
+          backgroundImageStyle: backgroundDisplayStyle,
+        }
+      },
+      {
+        // 黑色手持场景：黑底照片背景（1086x1448，与画布同为 3:4），
+        // 黑色手机近竖直（无旋转）。屏幕内容区经像素检测：x 386-755 / y 251-1050，
+        // 边框厚约 17px，外框画布尺寸约 445x917 → scale 1.045，中心偏移 translateX(30) translateY(-81)
+        defaultProtoUrl: iphoneBlackHandImage,
+        exampleName: t("mockup.blackHand"),
+        protoList: [
+          {
+            type: 'iphoneType',
+            name: 'iPhone',
+            frame: true,
+            smartIsLand: true,
+            style: {
+              width: '426px',
+              height: '877px',
+              transform: 'rotate(0deg) translateX(30px) translateY(-81px) scaleX(1.045) scaleY(1.045) perspective(none) skewX(0deg) skewY(0deg) rotateX(0deg) rotateY(0deg) rotateZ(0deg)',
+              filter: 'drop-shadow(rgba(0, 0, 0, 0.25) -10px 10px 10px)',
+            },
+            paperStyleMethod: (_proto) => {
+              return "width: calc(100% - 36px);height: calc(100% - 32px); border-radius: 50px;position: absolute;left: 18px;top: 16px;"
+            },
+            paperChatStyle: {
+              position: 'absolute',
+              width: '390px',
+              height: '653.12px',
+              top: '115px',
+              left: '18px',
+            },
+            screenType: screenOptions['iphoneType'][0],
+            selectedTime: new Date(),
+            selectedDate: new Date(),
+            systemColor: defaultSystemColor,
+            dateTimeColor: defaultDateTimeColor
+          }
+        ],
+        background: {
+          type: backgroundOptions[0],
+          autoUpdate: false,
+          defaultBackgroundUrl: iphoneBlackHandBackgroundImage,
           needBlur: false,
           backgroundImageStyle: backgroundDisplayStyle,
         }

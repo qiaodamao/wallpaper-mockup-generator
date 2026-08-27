@@ -25,8 +25,8 @@ const {
 const waterSetting = ref<WatermarkSetting>({
   enable: true,
   text: t("mockup.designByWho"),
-  color: "#ffffff",
-  fontSize: 30,
+  color: "rgba(255, 255, 255, 0.5)",
+  fontSize: 24,
   translateX: 7,
   translateY: 740
 })
@@ -313,6 +313,21 @@ onMounted(() => {
   window.onresize = () => {
     changeProtoWidth()
   }
+
+  // 预加载各场景默认背景图：背景图较大（100-500KB），不预加载时
+  // 切换样机场景会出现样机先显示、背景慢一拍的观感
+  const backgroundUrls = new Set<string>()
+  for (const group of protoTypeList.value) {
+    for (const item of group.list) {
+      if (item.background.defaultBackgroundUrl) {
+        backgroundUrls.add(item.background.defaultBackgroundUrl)
+      }
+    }
+  }
+  backgroundUrls.forEach((url) => {
+    const img = new Image()
+    img.src = url
+  })
 })
 
 

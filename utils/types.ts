@@ -17,6 +17,10 @@ export interface MockupProtoItem {
   paperStyleMethod?: (proto: MockupProtoItem) => string | Record<string, string>
   /** 聊天界面的壁纸样式 */
   paperChatStyle?: Record<string, string>
+  /** 锁屏日期时间缩放系数（相对标准大布局默认 1；proto 布局缩小的场景需等比设置，如 1/5 布局传 0.2） */
+  dateTimeScale?: number
+  /** 锁屏日期时间在大布局坐标下的 top 基准（默认 463） */
+  dateTimeTop?: number
   /** 屏幕模式：锁屏 / 桌面 / 仅样机 */
   screenType: string
   selectedTime: Date
