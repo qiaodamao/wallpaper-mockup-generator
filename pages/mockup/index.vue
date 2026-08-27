@@ -145,11 +145,9 @@ function blurPointChange(currentBlurPoint: number | number[]) {
 const paperUrl = ref(defaultImage)
 // ref="upload" 位于 protoList 的 v-for 内，Vue 会收集为数组
 const upload = ref<UploadInstance[] | null>(null)
-const handleChange = (uploadFile: UploadFile) => {
-  if (!uploadFile.raw) return
-  const tempUrl = URL.createObjectURL(uploadFile.raw)
-  upload.value?.[0]?.clearFiles()
 
+// 更新壁纸并刷新智能配色（上传 / 裁剪共用）
+function updatePaperUrl(url: string) {
   const paperImg = paperImage.value?.[0]
   if (paperImg) {
     paperImg.onload = () => {
@@ -161,10 +159,63 @@ const handleChange = (uploadFile: UploadFile) => {
     }
   }
 
-  paperUrl.value = tempUrl
+  paperUrl.value = url
 
   if (autoUpdate.value) {
     backgroundUrl.value = paperUrl.value
+  }
+}
+
+const handleChange = (uploadFile: UploadFile) => {
+  if (!uploadFile.raw) return
+  const tempUrl = URL.createObjectURL(uploadFile.raw)
+  upload.value?.[0]?.clearFiles()
+  // 记录上传原图（裁剪重置用），裁剪结果不覆盖此值
+  originalPaperUrl.value = tempUrl
+  updatePaperUrl(tempUrl)
+}
+
+// ===== 图片裁剪（ImageCropper）=====
+const cropVisible = ref(false)
+// 'paper' 裁剪壁纸 / 'background' 裁剪背景
+const cropTarget = ref<'paper' | 'background'>('paper')
+// 裁剪框宽高比：壁纸裁剪时与样机壁纸实际尺寸一致；背景裁剪时与画布一致（3:4）
+const cropRatio = ref(3 / 4)
+// 上传时的原始图（未被裁剪覆盖），用于裁剪弹窗"重置"恢复原图
+const originalPaperUrl = ref(defaultImage)
+const originalBackgroundUrl = ref(defaultImage)
+const cropImageUrl = computed(() => (cropTarget.value === 'paper' ? paperUrl.value : backgroundUrl.value))
+const cropResetImageUrl = computed(() => (cropTarget.value === 'paper' ? originalPaperUrl.value : originalBackgroundUrl.value))
+const cropTitle = computed(() =>
+  cropTarget.value === 'paper' ? t('mockup.cropPaperTitle') : t('mockup.cropBackgroundTitle'))
+
+// iPad / Mac 为横屏样机，壁纸比例回退值（实测失败时使用）
+const cropLandscapeFallback = computed(() => ['iPad', 'Mac'].includes(activeProtoTypeName.value))
+
+function openCropper(target: 'paper' | 'background') {
+  cropTarget.value = target
+  if (target === 'background') {
+    // 背景铺满整个 1200x1600 画布
+    cropRatio.value = 3 / 4
+  } else {
+    // 实测当前样机壁纸的实际渲染尺寸（offsetWidth 不受 transform 影响）
+    const el = (paperImage.value as (HTMLImageElement | null)[])
+      .find(e => e && e.offsetWidth > 0 && e.offsetHeight > 0)
+    if (el) {
+      cropRatio.value = el.offsetWidth / el.offsetHeight
+    } else {
+      // 回退：横屏样机 1194:834，竖屏 390:845
+      cropRatio.value = cropLandscapeFallback.value ? 1194 / 834 : 390 / 845
+    }
+  }
+  cropVisible.value = true
+}
+
+function onCropConfirm(dataUrl: string) {
+  if (cropTarget.value === 'paper') {
+    updatePaperUrl(dataUrl)
+  } else {
+    backgroundUrl.value = dataUrl
   }
 }
 
@@ -183,6 +234,7 @@ const handleChangeBackground = (uploadFile: UploadFile) => {
   if (!uploadFile.raw) return
   const tempUrl = URL.createObjectURL(uploadFile.raw)
   backgroundUrl.value = tempUrl
+  originalBackgroundUrl.value = tempUrl
   uploadBackground.value?.clearFiles()
 }
 
@@ -431,19 +483,17 @@ class="setting-section"
             <el-segmented v-model="proto.screenType" :options="screenLabelOptions(screenOptions[proto.type])" block />
             <div class="paper-setting">
               <div>{{ t("mockup.wallPaperText") }}</div>
-              <el-upload
-ref="upload" class="upload-demo" :drag="true" :on-change="handleChange" :show-file-list="false"
-                :auto-upload="false" action="#" :limit="1">
-                <div class="el-upload__text">
-                  {{ t("mockup.dragToHere") }}
-                </div>
-                <!-- <template #tip>
-                <div class="el-upload__tip">
-                  jpg/png files with a size less than 500kb
-                </div>
-              </template> -->
-              </el-upload>
+              <el-button class="crop-btn" size="small" @click="openCropper('paper')">
+                {{ t("mockup.cropImage") }}
+              </el-button>
             </div>
+            <el-upload
+ref="upload" class="upload-demo" :drag="true" :on-change="handleChange" :show-file-list="false"
+              :auto-upload="false" action="#" :limit="1">
+              <div class="el-upload__text">
+                {{ t("mockup.dragToHere") }}
+              </div>
+            </el-upload>
             <div
               v-if="proto.screenType == 'lockScreen' || (proto.type == 'ipadType' && proto.screenType == 'desktopScreen')"
               class="date-setting">
@@ -534,6 +584,9 @@ ref="uploadBackground" class="upload-demo" :drag="true" :on-change="handleChange
                   {{ t('mockup.dragToHere') }}
                 </div>
               </el-upload>
+              <el-button class="crop-btn block" size="small" @click="openCropper('background')">
+                {{ t("mockup.cropImage") }}
+              </el-button>
 
               <div class="blur-setting">
                 <div>{{ t('mockup.blur') }}</div>
@@ -596,6 +649,9 @@ ref="uploadBackground" class="upload-demo" :drag="true" :on-change="handleChange
                 {{ t("mockup.dragToHere") }}
               </div>
             </el-upload>
+            <el-button class="crop-btn block" size="small" @click="openCropper('background')">
+              {{ t("mockup.cropImage") }}
+            </el-button>
 
             <div class="blur-setting">
               <div>{{ t("mockup.blur") }}</div>
@@ -642,6 +698,9 @@ v-model="backgroundColor" :predefine="['rgb(255, 255, 255)', 'rgb(76, 76, 76)', 
       </div>
 
     </div>
+
+    <ImageCropper v-model:visible="cropVisible" :image-url="cropImageUrl" :reset-image-url="cropResetImageUrl"
+      :title="cropTitle" :ratio="cropRatio" @confirm="onCropConfirm" />
 
     <el-dialog v-model="dialogVisible" title="长按保存图片" align-center :modal="true" :width="exportPopupWidth">
       <div class='dialogSubTitle'>电脑端请点击<span class='copy' @click='onCopy'>复制链接</span>到浏览器使用</div>
@@ -984,11 +1043,22 @@ video {
       align-items: center;
       padding-top: 12px;
 
+      .crop-btn {
+        margin-left: 8px;
+      }
+
       .upload-demo {
         :deep(.el-upload-dragger) {
           padding: 4px 16px;
         }
       }
+    }
+
+    // 裁剪按钮：背景区的块级展示（占满一行）
+    .crop-btn.block {
+      width: 100%;
+      margin-top: 8px;
+      margin-left: 0;
     }
 
     .date-setting {
