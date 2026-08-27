@@ -69,35 +69,47 @@ export function useColorExtract(deps: {
     recommendedBackgroundColor.value = mainColors[0]
   }
 
-  // Canvas 像素采样：统计出现频率最高的颜色 + 整体平均色，返回主色列表
+  // Canvas 像素采样：统计出现频率最高的颜色 + 整体平均色，返回主色列表。
+  // 性能关键：先缩小到小尺寸采样画布（长边 96px）再遍历，避免原图千万级像素
+  // 逐像素拼接字符串与排序导致主线程长时间阻塞；量化到 16 级分桶统计
   function getMainColorsByImg(imageElement: HTMLImageElement, numColors: number): string[] {
+    const SAMPLE_SIZE = 96
+    const QUANT = 16
+    const scale = Math.min(SAMPLE_SIZE / imageElement.naturalWidth, SAMPLE_SIZE / imageElement.naturalHeight, 1)
+    const w = Math.max(1, Math.round(imageElement.naturalWidth * scale))
+    const h = Math.max(1, Math.round(imageElement.naturalHeight * scale))
+
     const canvas = document.createElement('canvas')
     const context = canvas.getContext('2d')!
-    canvas.width = imageElement.naturalWidth
-    canvas.height = imageElement.naturalHeight
-    context.drawImage(imageElement, 0, 0)
-    //获取每个像素的颜色数据
-    const imageData = context.getImageData(0, 0, canvas.width, canvas.height).data
+    canvas.width = w
+    canvas.height = h
+    context.drawImage(imageElement, 0, 0, w, h)
+    const imageData = context.getImageData(0, 0, w, h).data
 
     const colorCounts: Record<string, number> = {}
 
     let r = 0
     let g = 0
     let b = 0
+    let count = 0
 
     for (let i = 0; i < imageData.length; i = i + 4) {
-      const rgba = `rgb(${imageData[i]},${imageData[i + 1]},${imageData[i + 2]})`
-      if (!['rgb(0,0,0)', 'rgb(255,255,255)'].includes(rgba)) {
-        if (rgba in colorCounts) {
-          colorCounts[rgba]++
-        } else {
-          colorCounts[rgba] = 1
-        }
-      }
+      const pr = imageData[i]
+      const pg = imageData[i + 1]
+      const pb = imageData[i + 2]
+      r += pr
+      g += pg
+      b += pb
+      count++
 
-      r += imageData[i];
-      g += imageData[i + 1];
-      b += imageData[i + 2];
+      // 量化分桶，避免海量相近颜色 key
+      const qr = Math.round(pr / QUANT) * QUANT
+      const qg = Math.round(pg / QUANT) * QUANT
+      const qb = Math.round(pb / QUANT) * QUANT
+      if (qr === 0 && qg === 0 && qb === 0) continue
+      if (qr === 240 && qg === 240 && qb === 240) continue
+      const key = `${qr},${qg},${qb}`
+      colorCounts[key] = (colorCounts[key] ?? 0) + 1
     }
 
     const sortedColors = Object.keys(colorCounts).sort((a, b) => {
@@ -105,14 +117,16 @@ export function useColorExtract(deps: {
     })
 
     // 获取主题色
-    const count = (canvas.width * canvas.height);
     r = Math.round(r / count)
     g = Math.round(g / count)
     b = Math.round(b / count)
 
     const mainRgb = `rgb(${r},${g},${b})`
 
-    const result = sortedColors.slice(0, numColors)
+    const result = sortedColors.slice(0, numColors).map(key => {
+      const [kr, kg, kb] = key.split(',').map(Number)
+      return `rgb(${kr},${kg},${kb})`
+    })
     result.unshift(mainRgb)
     return result
   }
