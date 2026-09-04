@@ -96,6 +96,7 @@ const { t } = useI18n()
   max-width: 900px;
   height: auto;
   border-radius: 0.5rem;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.05);
 }
 
 /* ===== 平板/桌面端覆盖 ===== */

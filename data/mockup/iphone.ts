@@ -1,5 +1,5 @@
 import type { MockupExample } from '~/utils/types'
-import { default1Image, noFrameDefault1Image, default2Image, noFrameDefault2Image, magazineImage, magazineBackgroundImage, standImage, standBackgroundImage, againstWallImage, againstWallBackgroundImage, marbleImage, marbleBackgroundImage, iphoneHand1Image, hand1BackgroundImage, desktopIphoneBackgroundImage, iphoneDesktopImage, iphoneBlackHandImage, iphoneBlackHandBackgroundImage, screenOptions, backgroundOptions, defaultSystemColor, defaultDateTimeColor } from './assets'
+import { default1Image, noFrameDefault1Image, default2Image, noFrameDefault2Image, magazineImage, magazineBackgroundImage, standImage, standBackgroundImage, againstWallImage, againstWallBackgroundImage, marbleImage, marbleBackgroundImage, iphoneHand1Image, hand1BackgroundImage, desktopIphoneBackgroundImage, iphoneDesktopImage, iphoneBlackHandImage, iphoneBlackHandBackgroundImage, iphoneWhiteBaseImage, iphoneWhiteBaseBackgroundImage, screenOptions, backgroundOptions, defaultSystemColor, defaultDateTimeColor } from './assets'
 
 type TFunc = (key: string) => string
 type StyleFn = (zIndex?: number) => Record<string, string | number>
@@ -445,6 +445,53 @@ export function createIphoneExamples(t: TFunc, backgroundDisplayStyle: StyleFn):
           type: backgroundOptions[0],
           autoUpdate: false,
           defaultBackgroundUrl: iphoneBlackHandBackgroundImage,
+          needBlur: false,
+          backgroundImageStyle: backgroundDisplayStyle,
+        }
+      },
+      {
+        // 白色底座场景：白色场景背景（1200x1600，与画布同为 3:4），
+        // 手机（含边框）已包含在背景图中，手机切斜摆放（带透视），
+        // 壁纸通过 2D 单应性变换（matrix3d）直接铺满背景图中手机的屏幕区域。
+        // 屏幕四角经边框内边缘像素检测 + 最小二乘直线拟合求交点（画布坐标）：
+        // TL(464.8,391.7) TR(798.1,351.2) BR(752.6,1277.3) BL(409.5,1275.3)
+        // 右边缘 x=815.35-0.04912y，上边缘 y=448.15-0.12142x，下边缘 y=1272.8+0.006x
+        // 矩阵映射目标为 proto 内壁纸矩形(18,16,390,845)；
+        // proto 经 flex 居中，transform-origin 默认 50% 50% 即画布中心(600,800)
+        defaultProtoUrl: iphoneWhiteBaseImage,
+        exampleName: t("mockup.whiteBase"),
+        protoList: [
+          {
+            type: 'iphoneType',
+            name: 'iPhone',
+            frame: false,
+            smartIsLand: false,
+            style: {
+              width: '426px',
+              height: '877px',
+              transform: 'matrix3d(0.866188, -0.053265, 0, -0.000122, -0.060050, 1.069208, 0, -0.000043, 0, 0, 1, 0, 2.668589, 15.940522, 0, 1)',
+            },
+            paperStyleMethod: (_proto) => {
+              return "width: calc(100% - 36px);height: calc(100% - 32px); border-radius: 50px;position: absolute;left: 18px;top: 16px;"
+            },
+            paperChatStyle: {
+              position: 'absolute',
+              width: '390px',
+              height: '653.12px',
+              top: '115px',
+              left: '18px',
+            },
+            screenType: screenOptions['iphoneType'][0],
+            selectedTime: new Date(),
+            selectedDate: new Date(),
+            systemColor: defaultSystemColor,
+            dateTimeColor: defaultDateTimeColor
+          }
+        ],
+        background: {
+          type: backgroundOptions[0],
+          autoUpdate: false,
+          defaultBackgroundUrl: iphoneWhiteBaseBackgroundImage,
           needBlur: false,
           backgroundImageStyle: backgroundDisplayStyle,
         }

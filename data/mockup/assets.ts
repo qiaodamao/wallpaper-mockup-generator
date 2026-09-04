@@ -36,6 +36,8 @@ export const desktopIphoneBackgroundImage = '/image/background/desktop-iphone.jp
 export const iphoneDesktopImage = '/image/proto/iphone-desktop.png'
 export const iphoneBlackHandImage = '/image/proto/black_hand.png'
 export const iphoneBlackHandBackgroundImage = '/image/background/black_hand.png'
+export const iphoneWhiteBaseImage = '/image/proto/white-base.png'
+export const iphoneWhiteBaseBackgroundImage = '/image/background/white-base.png'
 export const defaultImage = '/image/7.jpg'
 
 // 屏幕模式选项（存 i18n key，渲染时经 screenLabelOptions 转换为多语言文案）
